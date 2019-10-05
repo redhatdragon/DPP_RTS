@@ -1,0 +1,3 @@
+﻿  game.c
+C:\Users\Yuki\Documents\GitHub\DPP_RTS\DPP_RTS\game.c(29,27): warning C4244:  'function': conversion from 'double' to 'DWORD', possible loss of data
+  DPP_RTS.vcxproj -> C:\Users\Yuki\Documents\GitHub\DPP_RTS\DPP_RTS\Debug\DPP_RTS.exe
