@@ -1,3 +1,6 @@
 #pragma once
 
-void loadLevel();
+size_t levelGetGameObjectCount();
+void levelDisplay();
+void levelRun();
+void levelLoad();

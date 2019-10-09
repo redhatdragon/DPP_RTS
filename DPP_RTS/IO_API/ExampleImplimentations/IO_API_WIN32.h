@@ -37,6 +37,7 @@ uint16_t cHeight = 0;
 
 
 void drawTextureFromFile(const char *fileName, int x, int y) {
+	typedef unsigned int uint;
 	uint32_t *buffer = 0;
 	unsigned int width, height;
 	getPNGData(fileName, &buffer, &width, &height);
@@ -47,7 +48,7 @@ void drawTextureFromFile(const char *fileName, int x, int y) {
 
 			unsigned int px = i + x, py = j + y;
 
-			if (px < 0 || py < 0 || px > cWidth - 1 || py > cHeight - 1)
+			if (px < (uint)0 || py < (uint)0 || px > cWidth - (uint)1 || py > cHeight - (uint)1)
 				continue;
 
 			canvas[px + py * cWidth] = buffer[i + j * width];
@@ -84,6 +85,28 @@ void getTexture(const char *fileName, struct Texture *texture) {
 	uint32_t *buffer = NULL;
 	getPNGData(fileName, &buffer, &texture->w, &texture->h);
 	texture->data = buffer;
+}
+void drawRect(int x, int y, int w, int h, uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
+	uint8_t color[4] = { r, g, b, a };
+	for (unsigned int i = 0; i < w; i++) {
+		for (unsigned int j = 0; j < h; j++) {
+			int newX = i+x; int newY = j+y;
+			if(newX < 0 || newX > cWidth
+			|| newY < 0 || newY > cHeight)
+				continue;
+			memcpy(&canvas[newX + newY * cWidth], &color[0], sizeof(uint32_t));
+		}
+	}
+}
+
+bool keyStates[256];
+void getKeyboardState(uint8_t *outBuffer) {
+	for (unsigned int i = 0; i < 256; i++) {
+		//outBuffer[i] = GetAsyncKeyState(i) & 0x8000;
+		//outBuffer[i] = GetAsyncKeyState(i) & 0x0001;
+	}
+	//GetKeyboardState(outBuffer);
+	memcpy(outBuffer, keyStates, 256);
 }
 
 bool getFileData(const char* fileName, uint8_t* dataBuffer, uint32_t startPos, uint32_t numBytes) {
@@ -199,7 +222,12 @@ void PaintWindow(HWND hWnd) {  //Probably needs a clean and tune up.
 LRESULT CALLBACK WindowProcedure(HWND hWnd, UINT msg, WPARAM wp, LPARAM lp) {
 
 	switch (msg) {
-	case WM_KEYDOWN:	return 0;  // same as pressing the X button:
+	case WM_KEYDOWN:
+		keyStates[wp] = true;
+		return 0;
+	case WM_KEYUP:
+		keyStates[wp] = false;
+		return 0;
 	case WM_CLOSE:		DestroyWindow(hWnd); return 0;
 	case WM_DESTROY:	end(); exit(0); return 0;
 						//PostQuitMessage(0);  //May not be needed.

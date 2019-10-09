@@ -43,70 +43,83 @@ function?
 
 *************************************************************************/
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdint.h>
 
+#ifndef __cplusplus
 #ifndef _STDBOOL
 #define _STDBOOL
-typedef uint8_t bool;
+	typedef uint8_t bool;
 #define true 1
 #define false 0
+#endif
 #endif
 
 
 #define MAX_CANVAS_SIZE 1024*768 //Change to suit your largest possible resolution
-extern uint32_t canvas[MAX_CANVAS_SIZE];
-extern uint16_t cWidth, cHeight;
+	extern uint32_t canvas[MAX_CANVAS_SIZE];
+	extern uint16_t cWidth, cHeight;
 
 
 
-struct Texture {
-	uint32_t *data;
-	uint32_t w, h;
-};
-struct Audio {
-	uint8_t *data;
-	uint32_t playAtTimeMS;
-	uint32_t stopAtTimeMS;
-	bool canPlay, looping;
-};
-struct AudioChain {
-	uint16_t playAtTrack;
-	uint16_t stopAtTrack;
-	bool paused, looping;
-	uint16_t audioCount;
-	struct Audio audio[];
-};
-struct PacketUDP {
-	uint32_t length;
-	uint32_t capacity;
-	uint8_t data[];
-};
+	struct Texture {
+		uint32_t* data;
+		uint32_t w, h;
+	};
+	struct Audio {
+		uint8_t* data;
+		uint32_t playAtTimeMS;
+		uint32_t stopAtTimeMS;
+		bool canPlay, looping;
+	};
+	struct AudioChain {
+		uint16_t playAtTrack;
+		uint16_t stopAtTrack;
+		bool paused, looping;
+		uint16_t audioCount;
+		struct Audio audio[1];  //Variable length
+	};
+	struct PacketUDP {
+		uint32_t length;
+		uint32_t capacity;
+		uint8_t data[1];  //Variable length
+	};
 
 
 
-void drawTextureFromFile(const char *fileName, int x, int y);
-void drawTextureFromFileUnsafe(const char *fileName, int x, int y);
-void drawTexture(const struct Texture *texture, int x, int y);
-void getTexture(const char *fileName, struct Texture *texture);
-void drawText(const char *str, int x, int y);
+	void drawTextureFromFile(const char* fileName, int x, int y);
+	void drawTextureFromFileUnsafe(const char* fileName, int x, int y);
+	void drawTexture(const struct Texture* texture, int x, int y);
+	void getTexture(const char* fileName, struct Texture* texture);
+	void drawText(const char* str, int x, int y);
+	void drawRect(int x, int y, int w, int h, uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
-bool getFileData(const char *fileName, uint8_t *dataBuffer, uint32_t startPos, uint32_t numBytes);
-bool getFileText(const char *fileName, char *strBuffer);
-bool writeFileData(const char *fileName, uint8_t *data);
-bool writeFileText(const char *fileName, char *str);
-bool appendToFileData(const char *fileName, uint8_t *data);
-bool appendToFileText(const char *fileName, char *str);
+	void getKeyboardState(uint8_t *outBuffer);
 
-bool playAudioFile(const char *fileName);
-bool getAudioFromFile(const char *fileName, struct Audio *audioBuffer);
-bool playAudio(struct Audio *audio);
+	bool getFileData(const char* fileName, uint8_t* dataBuffer, uint32_t startPos, uint32_t numBytes);
+	bool getFileText(const char* fileName, char* strBuffer);
+	bool writeFileData(const char* fileName, uint8_t* data);
+	bool writeFileText(const char* fileName, char* str);
+	bool appendToFileData(const char* fileName, uint8_t* data);
+	bool appendToFileText(const char* fileName, char* str);
 
-bool sendPacketUDP(struct PacketUDP *packet);
-struct PacketUDP *recvPacketUDP();
+	bool playAudioFile(const char* fileName);
+	bool getAudioFromFile(const char* fileName, struct Audio* audioBuffer);
+	bool playAudio(struct Audio* audio);
+
+	bool sendPacketUDP(struct PacketUDP* packet);
+	struct PacketUDP* recvPacketUDP();
 
 
 
-//Define these in your application to be called by the IO_API_ implimentations.
-void start();
-void appLoop();
-void end();
+	//Define these in your application to be called by the IO_API_ implimentations.
+	void start();
+	void appLoop();
+	void end();
+
+#ifdef __cplusplus
+}
+#endif

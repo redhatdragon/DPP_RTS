@@ -77,6 +77,7 @@
       <SDLCheck>false</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -89,6 +90,7 @@
       <SDLCheck>false</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -103,6 +105,7 @@
       <SDLCheck>false</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -119,6 +122,7 @@
       <SDLCheck>false</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -134,14 +138,18 @@
     <ClInclude Include="JSON.h\json.h" />
     <ClInclude Include="mapper.h" />
     <ClInclude Include="math\math.h" />
+    <ClInclude Include="Physics\BlueMath.h" />
+    <ClInclude Include="Physics\PhysicsEngine.h" />
+    <ClInclude Include="Physics\SpatialHashTable.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="engine.c" />
-    <ClCompile Include="game.c" />
+    <ClCompile Include="engine.cpp" />
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="IO_API\ExampleImplimentations\Texture\picoPNG\picoPNG.cpp" />
     <ClCompile Include="IO_API\IO_API.c" />
     <ClCompile Include="JSON.h\json.c" />
     <ClCompile Include="mapper.c" />
+    <ClCompile Include="Physics\PhysicsEngine.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
