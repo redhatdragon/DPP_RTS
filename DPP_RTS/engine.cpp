@@ -168,7 +168,7 @@ void levelLoad() {
 	physicsEngine = new PhysicsEngine(100000);
 	GameObject *newGameObject = new Fighter();
 	newGameObject->registeredPhysicsEngine = physicsEngine;
-	newGameObject->addBody(30, 30, 20, 20);
+	newGameObject->addBody(30, 1600, 20, 20);
 	gameObject.push_back(newGameObject);
 
 	newGameObject = new Wall();
@@ -180,4 +180,14 @@ void levelLoad() {
 	newGameObject->registeredPhysicsEngine = physicsEngine;
 	newGameObject->addBody(0, 0, 20, 2000);
 	gameObject.push_back(newGameObject);
+
+	for (unsigned int i = 0; i < 150; i++) {
+		for (unsigned int j = 0; j < 150; j++) {
+			newGameObject = new Bullet();
+			newGameObject->registeredPhysicsEngine = physicsEngine;
+			newGameObject->addBody(50+i*10, 50+j*10, 5, 5);
+			newGameObject->setVelocity(0, -5);
+			gameObject.push_back(newGameObject);
+		}
+	}
 }

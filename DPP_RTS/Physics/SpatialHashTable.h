@@ -32,7 +32,7 @@ public:
             }
         }
     }
-    inline std::vector<void *> getBodies(){
+    inline std::vector<void *> &getBodies(){
         return body;
     }
 };
